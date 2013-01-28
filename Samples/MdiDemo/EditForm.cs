@@ -129,7 +129,6 @@ namespace MDIDemo
                 fs.Write(sDoc.Text);
                 fs.Flush();
                 fs.Close();
-                sDoc.SaveRevisionMark();
             }
             catch (Exception x)
             {

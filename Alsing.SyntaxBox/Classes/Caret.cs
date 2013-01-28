@@ -177,7 +177,10 @@ namespace Alsing.Windows.Forms.SyntaxBox
                     }
                 }
             }
-            catch {}
+            catch
+            {
+                
+            }
             finally
             {
                 CropPosition();

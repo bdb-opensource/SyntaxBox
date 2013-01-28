@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Alsing.Text.PatternMatchers;
 
 namespace Alsing.Text
@@ -7,18 +8,16 @@ namespace Alsing.Text
     public class Tokenizer
     {
         private readonly TokenTree tree;
+        public bool IsImmutable { get;private set; }
 
         public Tokenizer()
         {
             tree = new TokenTree();
         }
 
-        public bool IsImmutable { get; private set; }
-
         public string Text { get; set; }
 
-        public Tokenizer AddPattern(IPatternMatcher matcher, bool caseSensitive, bool needsSeparators,
-                                    params object[] tags)
+        public Tokenizer AddPattern(IPatternMatcher matcher,bool caseSensitive,bool needsSeparators,params object[] tags)
         {
             ThrowIfImmutable();
 
@@ -30,7 +29,7 @@ namespace Alsing.Text
         {
             ThrowIfImmutable();
 
-            tree.AddToken(token, caseSensitive, needsSeparators, tags);
+            tree.AddToken(token,caseSensitive, needsSeparators, tags);
             return this;
         }
 
@@ -56,7 +55,7 @@ namespace Alsing.Text
 
                     var realToken = new Token(match.GetText(), match.Tags);
                     index = match.Index + match.Length;
-                    tokens.Add(realToken);
+                    tokens.Add(realToken);                    
                 }
                 else
                 {
@@ -71,8 +70,7 @@ namespace Alsing.Text
             return tokens.ToArray();
         }
 
-        private void ThrowIfImmutable()
-        {
+        private void ThrowIfImmutable() {
             if (IsImmutable)
                 throw new Exception("Tokens can not be added to an immutable tokenizer");
         }

@@ -46,8 +46,7 @@ namespace Alsing.Text
             nodes[startIndex].AddToken(text, true, needSeparators, tags);
         }
 
-        private void AddPatternWithCaseInsensitivePrefix(string prefix, IPatternMatcher matcher, bool needSeparators,
-                                                         object[] tags)
+        private void AddPatternWithCaseInsensitivePrefix(string prefix, IPatternMatcher matcher, bool needSeparators, object[] tags)
         {
             //make a lowercase string and add it as a token
             prefix = prefix.ToLower();
@@ -68,8 +67,7 @@ namespace Alsing.Text
             nodes[startIndex].AddPattern(prefix, false, needSeparators, matcher, tags);
         }
 
-        private void AddPatternWithCaseSensitivePrefix(string prefix, IPatternMatcher matcher, bool needSeparators,
-                                                       object[] tags)
+        private void AddPatternWithCaseSensitivePrefix(string prefix, IPatternMatcher matcher, bool needSeparators, object[] tags)
         {
             char startChar = prefix[0];
             int startIndex = startChar;
@@ -80,7 +78,7 @@ namespace Alsing.Text
         }
 
         private void AddPatternWithoutPrefix(IPatternMatcher matcher, bool caseSensitive, bool needSeparators,
-                                             object[] tags)
+                                                object[] tags)
         {
             if (matcher.DefaultPrefixes != null)
             {
@@ -92,11 +90,11 @@ namespace Alsing.Text
             else
             {
                 var patternMatcherReference = new PatternMatchReference(matcher)
-                                              {
-                                                  Tags = tags,
-                                                  NextSibling = root.FirstExpression,
-                                                  NeedSeparators = needSeparators
-                                              };
+                {
+                    Tags = tags,
+                    NextSibling = root.FirstExpression,
+                    NeedSeparators = needSeparators
+                };
 
                 root.FirstExpression = patternMatcherReference;
             }

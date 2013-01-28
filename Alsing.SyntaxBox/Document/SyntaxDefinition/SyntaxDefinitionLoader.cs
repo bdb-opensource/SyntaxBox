@@ -265,18 +265,10 @@ namespace Alsing.SourceCode
                             bool blnEndIsComplex = bool.Parse(EndIsComplex);
                             bool blnCauseIndent = bool.Parse(CauseIndent);
 
-                            var scope = new Scope
-                                        {
-                                            Style = GetStyle(style),
-                                            ExpansionText = text,
-                                            DefaultExpanded = expanded,
-                                            CauseIndent = blnCauseIndent
-                                        };
+                            var scope = new Scope {Style = GetStyle(style), ExpansionText = text, DefaultExpanded = expanded, CauseIndent = blnCauseIndent};
 
                             var StartP = new Pattern(Start, blnStartIsComplex, false, bool.Parse(StartIsKeyword));
-                            Pattern endPattern = EscapeChar != ""
-                                                     ? new Pattern(End, false, bool.Parse(EndIsKeyword), EscapeChar)
-                                                     : new Pattern(End, blnEndIsComplex, false, bool.Parse(EndIsKeyword));
+                            Pattern endPattern = EscapeChar != "" ? new Pattern(End, false, bool.Parse(EndIsKeyword), EscapeChar) : new Pattern(End, blnEndIsComplex, false, bool.Parse(EndIsKeyword));
 
                             if (EndIsSeparator != "")
                                 endPattern.IsSeparator = bool.Parse(EndIsSeparator);
@@ -421,8 +413,7 @@ namespace Alsing.SourceCode
                                     }
                                     if (Pattern != "")
                                     {
-                                        var pat = new Pattern(Pattern, IsComplex, IsSeparator, true)
-                                                  {Category = Category};
+                                        var pat = new Pattern(Pattern, IsComplex, IsSeparator, true) {Category = Category};
                                         pl.Add(pat);
                                     }
                                 }
@@ -502,8 +493,7 @@ namespace Alsing.SourceCode
                                     }
                                     if (Pattern != "")
                                     {
-                                        var pat = new Pattern(Pattern, IsComplex, IsSeparator, false)
-                                                  {Category = Category};
+                                        var pat = new Pattern(Pattern, IsComplex, IsSeparator, false) {Category = Category};
                                         pl.Add(pat);
                                     }
                                 }

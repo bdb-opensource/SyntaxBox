@@ -63,7 +63,8 @@ namespace Alsing.Windows.Forms
             }
         }
 
-        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(true),
+         EditorBrowsable(EditorBrowsableState.Always)]
         public new BorderStyle BorderStyle
         {
             get { return borderStyle; }

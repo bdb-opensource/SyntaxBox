@@ -15,5 +15,7 @@ namespace Alsing.SourceCode
     /// <summary>
     /// 
     /// </summary>
-    public sealed class WordList : List<Word> {}
+    public sealed class WordList : List<Word>
+    {        
+    }
 }

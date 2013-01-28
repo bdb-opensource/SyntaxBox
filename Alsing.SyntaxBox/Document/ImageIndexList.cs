@@ -15,5 +15,7 @@ namespace Alsing.SourceCode
     /// <summary>
     /// 
     /// </summary>
-    public class ImageIndexList : List<int> {}
+    public class ImageIndexList : List<int>
+    {
+    }
 }

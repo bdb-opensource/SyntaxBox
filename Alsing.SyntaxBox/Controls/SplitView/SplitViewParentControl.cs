@@ -9,6 +9,7 @@
 // *
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -155,7 +156,12 @@ namespace Alsing.Windows.Forms.CoreLib
                 UpperRight = GetNewView();
                 LowerLeft = GetNewView();
 
-                splitView.Controls.AddRange(new Control[] {UpperLeft, LowerLeft, UpperRight});
+                splitView.Controls.AddRange(new Control[]
+                                            {
+                                                UpperLeft,
+                                                LowerLeft,
+                                                UpperRight
+                                            });
 
                 splitView.UpperRight = LowerLeft;
                 splitView.UpperLeft = UpperLeft;
@@ -276,7 +282,8 @@ namespace Alsing.Windows.Forms.CoreLib
 
         private ScrollBars _ScrollBars;
 
-        [Category("Appearance"), Description("Determines what Scrollbars should be visible")]
+        [Category("Appearance"),
+         Description("Determines what Scrollbars should be visible")]
         [DefaultValue(ScrollBars.Both)]
         public ScrollBars ScrollBars
         {
@@ -305,7 +312,8 @@ namespace Alsing.Windows.Forms.CoreLib
         //member variable
         private bool _SplitView;
 
-        [Category("Appearance"), Description("Determines if the controls should use splitviews")]
+        [Category("Appearance"),
+         Description("Determines if the controls should use splitviews")]
         [DefaultValue(true)]
         public bool SplitView
         {
@@ -347,7 +355,7 @@ namespace Alsing.Windows.Forms.CoreLib
         [DefaultValue(BorderStyle.FixedSingle)]
         public BorderStyle ChildBorderStyle
         {
-            get { return (Views[0]).BorderStyle; }
+            get { return ((SplitViewChildControl) Views[0]).BorderStyle; }
             set
             {
                 foreach (SplitViewChildControl ev in Views)
@@ -369,7 +377,7 @@ namespace Alsing.Windows.Forms.CoreLib
         [DefaultValue(typeof (Color), "ControlDark")]
         public Color ChildBorderColor
         {
-            get { return (Views[0]).BorderColor; }
+            get { return ((SplitViewChildControl) Views[0]).BorderColor; }
             set
             {
                 foreach (SplitViewChildControl ev in Views)
@@ -408,7 +416,10 @@ namespace Alsing.Windows.Forms.CoreLib
             // 
             // SplitViewParentControl
             // 
-            Controls.AddRange(new Control[] {splitView});
+            Controls.AddRange(new Control[]
+                              {
+                                  splitView
+                              });
             Name = "SplitViewParentControl";
             Size = new Size(248, 216);
             ResumeLayout(false);

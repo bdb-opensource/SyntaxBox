@@ -17,7 +17,8 @@ namespace Alsing.SourceCode
     /// <summary>
     /// 
     /// </summary>
-    public sealed class UndoBlockCollection : IList, ICloneable
+    public sealed class UndoBlockCollection : ICollection, IList, IEnumerable,
+                                              ICloneable
     {
         private const int DefaultMinimumCapacity = 16;
 
@@ -35,9 +36,7 @@ namespace Alsing.SourceCode
         /// <summary>
         /// 
         /// </summary>
-        public UndoBlockCollection()
-        {
-        }
+        public UndoBlockCollection() {}
 
         /// <summary>
         /// 
@@ -240,7 +239,8 @@ namespace Alsing.SourceCode
         public void CopyTo(UndoBlock[] array, int start)
         {
             if (m_count > array.GetUpperBound(0) + 1 - start)
-                throw new ArgumentException("Destination array was not long enough.");
+                throw new ArgumentException(
+                    "Destination array was not long enough.");
 
             // for (int i=0; i < m_count; ++i) array[start+i] = m_array[i];
             Array.Copy(m_array, 0, array, start, m_count);
@@ -358,7 +358,8 @@ namespace Alsing.SourceCode
             ++m_version;
 
             Capacity += collection.Count;
-            Array.Copy(collection.m_array, 0, m_array, m_count, collection.m_count);
+            Array.Copy(collection.m_array, 0, m_array, m_count,
+                       collection.m_count);
             m_count += collection.Count;
         }
 

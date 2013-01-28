@@ -79,7 +79,8 @@ namespace Alsing.SourceCode
             base.Dispose(disposing);
         }
 
-        private void pgStyles_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void pgStyles_PropertyValueChanged(object s,
+                                                   PropertyValueChangedEventArgs e)
         {
             PreviewStyle();
         }
@@ -147,7 +148,10 @@ namespace Alsing.SourceCode
             // panel2
             // 
             this.panel2.Controls.AddRange(new System.Windows.Forms.Control[]
-                                          {this.lblPreview, this.btnCancel, this.btnOK});
+                                          {
+                                              this.lblPreview, this.btnCancel, this.btnOK
+                                          }
+                );
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(4, 255);
             this.panel2.Name = "panel2";
@@ -156,7 +160,8 @@ namespace Alsing.SourceCode
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+            this.btnCancel.Anchor = (System.Windows.Forms.AnchorStyles.Top |
+                                     System.Windows.Forms.AnchorStyles.Right);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(279, 48);
             this.btnCancel.Name = "btnCancel";
@@ -166,7 +171,8 @@ namespace Alsing.SourceCode
             // 
             // btnOK
             // 
-            this.btnOK.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+            this.btnOK.Anchor = (System.Windows.Forms.AnchorStyles.Top |
+                                 System.Windows.Forms.AnchorStyles.Right);
             this.btnOK.Location = new System.Drawing.Point(200, 48);
             this.btnOK.Name = "btnOK";
             this.btnOK.TabIndex = 3;
@@ -187,8 +193,9 @@ namespace Alsing.SourceCode
             this.pgStyles.ToolbarVisible = false;
             this.pgStyles.ViewBackColor = System.Drawing.SystemColors.Window;
             this.pgStyles.ViewForeColor = System.Drawing.SystemColors.WindowText;
-            this.pgStyles.PropertyValueChanged +=
-                new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgStyles_PropertyValueChanged);
+            this.pgStyles.PropertyValueChanged += new
+                System.Windows.Forms.PropertyValueChangedEventHandler
+                (this.pgStyles_PropertyValueChanged);
             // 
             // panel1
             // 
@@ -201,7 +208,11 @@ namespace Alsing.SourceCode
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel3.Controls.AddRange(new System.Windows.Forms.Control[] {this.lblCaption});
+            this.panel3.Controls.AddRange(new System.Windows.Forms.Control[]
+                                          {
+                                              this.lblCaption
+                                          }
+                );
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(4, 2);
             this.panel3.Name = "panel3";
@@ -211,8 +222,10 @@ namespace Alsing.SourceCode
             // lblCaption
             // 
             this.lblCaption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold,
-                                                           System.Drawing.GraphicsUnit.Point, ((System.Byte) (0)));
+            this.lblCaption.Font = new System.Drawing.Font("Microsoft Sans Serif",
+                                                           11F, System.Drawing.FontStyle.Bold,
+                                                           System.Drawing.GraphicsUnit.Point,
+                                                           ((System.Byte) (0)));
             this.lblCaption.ForeColor = System.Drawing.SystemColors.Window;
             this.lblCaption.Name = "lblCaption";
             this.lblCaption.Size = new System.Drawing.Size(354, 24);
@@ -225,12 +238,15 @@ namespace Alsing.SourceCode
             this.lblPreview.BackColor = System.Drawing.SystemColors.Window;
             this.lblPreview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblPreview.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblPreview.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular,
-                                                           System.Drawing.GraphicsUnit.Point, ((System.Byte) (0)));
+            this.lblPreview.Font = new System.Drawing.Font("Courier New", 10F,
+                                                           System.Drawing.FontStyle.Regular,
+                                                           System.Drawing.GraphicsUnit.Point, (
+                                                                                                  (System.Byte) (0)));
             this.lblPreview.Name = "lblPreview";
             this.lblPreview.Size = new System.Drawing.Size(354, 40);
             this.lblPreview.TabIndex = 8;
-            this.lblPreview.Text = "The quick brown fox jumped over the lazy dog.        ";
+            this.lblPreview.Text =
+                "The quick brown fox jumped over the lazy dog.        ";
             this.lblPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TextStyleDesignerDialog
@@ -241,7 +257,10 @@ namespace Alsing.SourceCode
             this.ClientSize = new System.Drawing.Size(362, 335);
             this.ControlBox = false;
             this.Controls.AddRange(new System.Windows.Forms.Control[]
-                                   {this.pgStyles, this.panel3, this.panel1, this.panel2});
+                                   {
+                                       this.pgStyles, this.panel3, this.panel1, this.panel2
+                                   }
+                );
             this.DockPadding.Left = 4;
             this.DockPadding.Right = 4;
             this.DockPadding.Top = 2;

@@ -28,7 +28,7 @@ namespace Alsing.SourceCode
         {
             languages = new List<SyntaxDefinition>();
 
-            string[] files = Directory.GetFiles(".", "*.syn");
+            string[] files = Directory.GetFiles(@"C:\Users\hadasn.BDB\Desktop\SourceCode-2\Alsing\SyntaxBox\SyntaxFiles", "*.syn");            
             foreach (string file in files)
             {
                 var loader = new SyntaxDefinitionLoader();

@@ -8,6 +8,7 @@
 // *
 // *
 
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Alsing.Windows.Forms.FormatLabel

@@ -23,6 +23,18 @@ namespace Alsing.SourceCode
     {
         public static readonly string DefaultSeparators = ".,+-*^\\/()[]{}@:;'?£$#%& \t=<>";
 
+        #region PUBLIC PROPERTY SEPARATORS
+
+        private string _Separators = DefaultSeparators;
+
+        public string Separators
+        {
+            get { return _Separators; }
+            set { _Separators = value; }
+        }
+
+        #endregion
+
         private string _StringPattern = "";
         public BracketType BracketType = BracketType.None;
 
@@ -68,18 +80,6 @@ namespace Alsing.SourceCode
 
         internal Regex rx;
 
-        #region PUBLIC PROPERTY SEPARATORS
-
-        private string _Separators = DefaultSeparators;
-
-        public string Separators
-        {
-            get { return _Separators; }
-            set { _Separators = value; }
-        }
-
-        #endregion
-
         /// <summary>
         /// 
         /// </summary>
@@ -122,7 +122,8 @@ namespace Alsing.SourceCode
         public Pattern(string pattern, bool separator, bool keyword, string escapeChar)
         {
             escapeChar = Regex.Escape(escapeChar);
-            string escapePattern = string.Format("(?<=((?<!{0})({0}{0})*))({1})", escapeChar, pattern);
+            string escapePattern = string.Format("(?<=((?<!{0})({0}{0})*))({1})",
+                                              escapeChar, pattern);
             Init(escapePattern, true, separator, keyword);
         }
 
@@ -156,7 +157,6 @@ namespace Alsing.SourceCode
                 return false;
             }
         }
-
         private void Init(string pattern, bool isComplex, bool separator, bool keyword)
         {
             StringPattern = pattern;
@@ -165,6 +165,6 @@ namespace Alsing.SourceCode
             IsComplex = isComplex;
             if (isComplex)
                 rx = new Regex(StringPattern, RegexOptions.Compiled);
-        }
+        }        
     }
 }

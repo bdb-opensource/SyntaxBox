@@ -1,5 +1,6 @@
 ﻿namespace Alsing.SourceCode.SyntaxDocumentParsers
 {
+
     public class ScanResultWord
     {
         public bool HasContent;

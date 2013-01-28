@@ -11,8 +11,6 @@ namespace Alsing.SourceCode.SyntaxDocumentParsers
 {
     public abstract class ParserBase : IParser
     {
-        #region IParser Members
-
         public SyntaxDocument Document { get; set; }
         public SyntaxDefinition SyntaxDefinition { get; set; }
         public string Separators { get; set; }
@@ -23,7 +21,7 @@ namespace Alsing.SourceCode.SyntaxDocumentParsers
                 syntaxDefinitionPath += ".syn";
 
             var loader = new SyntaxDefinitionLoader();
-            SyntaxDefinition syntax = loader.Load(syntaxDefinitionPath);
+            var syntax = loader.Load(syntaxDefinitionPath);
             Init(syntax);
         }
 
@@ -39,7 +37,7 @@ namespace Alsing.SourceCode.SyntaxDocumentParsers
         }
 
         public abstract void ParseRow(int rowIndex, bool parseKeywords);
-
+        
 
         public void ParsePreviewLine(int rowIndex)
         {
@@ -48,7 +46,5 @@ namespace Alsing.SourceCode.SyntaxDocumentParsers
             Row.Add(Row.Text);
             Row.RowState = RowState.NotParsed;
         }
-
-        #endregion
     }
 }

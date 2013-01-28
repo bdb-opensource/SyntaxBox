@@ -28,9 +28,14 @@ namespace Alsing.SourceCode
         private readonly RowList rows = new RowList();
 
         /// <summary>
-        /// Buffer containing undo actions
+        /// 
         /// </summary>
-        public readonly UndoBuffer UndoBuffer = new UndoBuffer();
+        public RowList KeywordQueue = new RowList();
+
+        /// <summary>
+        /// List of rows that should be parsed
+        /// </summary>
+        public RowList ParseQueue = new RowList();
 
         private UndoBlockCollection captureBlock;
         private bool captureMode;
@@ -40,11 +45,6 @@ namespace Alsing.SourceCode
         /// For public use only
         /// </summary>
         private bool isParsed = true;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public RowList KeywordQueue = new RowList();
 
         private bool modified;
 
@@ -56,11 +56,7 @@ namespace Alsing.SourceCode
         /// </summary>
         public bool NeedResetRows;
 
-        /// <summary>
-        /// List of rows that should be parsed
-        /// </summary>
-        public RowList ParseQueue = new RowList();
-
+ 
 
         /// <summary>
         /// The active parser of the document
@@ -71,6 +67,11 @@ namespace Alsing.SourceCode
         /// Tag property , lets the user store custom data in the row.
         /// </summary>
         public object Tag;
+
+        /// <summary>
+        /// Buffer containing undo actions
+        /// </summary>
+        public readonly UndoBuffer UndoBuffer = new UndoBuffer();
 
         /// <summary>
         /// List of rows that is not hidden by folding
@@ -362,12 +363,6 @@ namespace Alsing.SourceCode
                 UndoStep = 0;
                 Modified = false;
                 isParsed = false;
-
-                foreach (Row r in this)
-                {
-                    r.RevisionMark = RowRevisionMark.Unchanged;
-                }
-
                 //OnChange();
                 InvokeChange();
             }
@@ -378,7 +373,10 @@ namespace Alsing.SourceCode
         /// </summary>
         public string[] Lines
         {
-            get { return Text.Split("\n".ToCharArray()); }
+            get
+            {
+                return Text.Split("\n".ToCharArray());
+            }
             set
             {
                 string s = "";
@@ -422,20 +420,6 @@ namespace Alsing.SourceCode
             Version ++;
             if (Version > long.MaxValue - 10)
                 Version = long.MinValue;
-        }
-
-        public void SaveRevisionMark()
-        {
-            foreach (Row r in this)
-            {
-                if (r.RevisionMark == RowRevisionMark.BeforeSave)
-                {
-                    r.RevisionMark = RowRevisionMark.AfterSave;
-                }
-            }
-
-            Modified = false;
-            ResetVisibleRows();
         }
 
         /// <summary>
@@ -506,7 +490,10 @@ namespace Alsing.SourceCode
         private void Init()
         {
             var l = new SyntaxDefinition();
-            l.mainSpanDefinition = new SpanDefinition(l) {MultiLine = true};
+            l.mainSpanDefinition = new SpanDefinition(l)
+                          {
+                              MultiLine = true
+                          };
             Parser.Init(l);
         }
 
@@ -689,7 +676,10 @@ namespace Alsing.SourceCode
             xtl.Text = text;
             if (storeUndo)
             {
-                var undo = new UndoBlock {Text = text,};
+                var undo = new UndoBlock {
+                               Text = text,
+                               
+                           };
 
                 undo.Position.Y = IndexOf(xtl);
                 AddToUndoList(undo);
@@ -742,7 +732,7 @@ namespace Alsing.SourceCode
                     ra.LastRow = index;
                     ra.LastColumn = r.Text.Length;
                 }
-                PushUndoBlock(UndoAction.DeleteRange, GetRange(ra), ra.FirstColumn, ra.FirstRow, r.RevisionMark);
+                PushUndoBlock(UndoAction.DeleteRange, GetRange(ra), ra.FirstColumn, ra.FirstRow);
             }
 
 
@@ -805,9 +795,7 @@ namespace Alsing.SourceCode
                             break;
                     }
                 }
-                catch
-                {
-                }
+                catch {}
 
                 return count;
             }
@@ -840,9 +828,7 @@ namespace Alsing.SourceCode
                             break;
                     }
                 }
-                catch
-                {
-                }
+                catch {}
 
                 return count;
             }
@@ -945,8 +931,7 @@ namespace Alsing.SourceCode
             if (StoreUndo)
             {
                 string deltext = GetRange(Range);
-                Row xtr = this[r.FirstRow];
-                PushUndoBlock(UndoAction.DeleteRange, deltext, r.FirstColumn, r.FirstRow, xtr.RevisionMark);
+                PushUndoBlock(UndoAction.DeleteRange, deltext, r.FirstColumn, r.FirstRow);
             }
 
 
@@ -1122,9 +1107,6 @@ namespace Alsing.SourceCode
         {
             Modified = true;
             Row xtr = this[yPos];
-
-            RowRevisionMark mark = xtr.RevisionMark;
-
             if (xPos > xtr.Text.Length)
             {
                 //virtualwhitespace fix
@@ -1157,7 +1139,7 @@ namespace Alsing.SourceCode
             }
 
             if (StoreUndo)
-                PushUndoBlock(UndoAction.InsertRange, text, xPos, yPos, mark);
+                PushUndoBlock(UndoAction.InsertRange, text, xPos, yPos);
 
             ResetVisibleRows();
             OnChange();
@@ -1197,14 +1179,15 @@ namespace Alsing.SourceCode
                 RowDeleted(this, new RowEventArgs(r));
         }
 
-        public void PushUndoBlock(UndoAction Action, string Text, int x, int y, RowRevisionMark mark)
+        public void PushUndoBlock(UndoAction Action, string text, int x, int y)
         {
-            var undo = new UndoBlock();
-            undo.Action = Action;
-            undo.Text = Text;
+            var undo = new UndoBlock {
+                           Action = Action,
+                           Text = text
+                       };
+
             undo.Position.Y = y;
             undo.Position.X = x;
-            undo.RowModified = (mark != RowRevisionMark.Unchanged);
             //AddToUndoList(undo);
 
             if (captureMode)
@@ -1229,12 +1212,12 @@ namespace Alsing.SourceCode
             string t = text.Replace(Environment.NewLine, "\n");
             string[] lines = t.Split("\n".ToCharArray());
             var r = new TextRange
-                        {
-                            FirstColumn = xPos,
-                            FirstRow = yPos,
-                            LastRow = (lines.Length - 1 + yPos),
-                            LastColumn = lines[lines.Length - 1].Length
-                        };
+                    {
+                        FirstColumn = xPos,
+                        FirstRow = yPos,
+                        LastRow = (lines.Length - 1 + yPos),
+                        LastColumn = lines[lines.Length - 1].Length
+                    };
 
             if (r.FirstRow == r.LastRow)
                 r.LastColumn += r.FirstColumn;
@@ -1478,9 +1461,7 @@ namespace Alsing.SourceCode
                     if (r.CanFold)
                         if (r.expansion_StartSpan.Expanded == false)
                         {
-                            if (r.expansion_StartSpan.EndWord == null)
-                            {
-                            }
+                            if (r.expansion_StartSpan.EndWord == null) {}
                             else
                             {
                                 r = r.Expansion_EndRow; // .expansion_StartSpan.EndRow;

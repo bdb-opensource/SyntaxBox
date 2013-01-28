@@ -15,5 +15,7 @@ namespace Alsing.SourceCode
     /// <summary>
     /// 
     /// </summary>
-    public sealed class PatternCollection : List<Pattern> {}
+    public sealed class PatternCollection : List<Pattern>
+    {
+    }
 }

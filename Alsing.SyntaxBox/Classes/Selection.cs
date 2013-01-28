@@ -90,7 +90,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
                 if (nCaretX != oCaretPos.X || nCaretY != oCaretPos.Y)
 
                 {
-                    Control.Caret.Position = new TextPoint(Bounds.LastColumn, Bounds.LastRow);
+                    Control.Caret.Position = new TextPoint(Bounds.LastColumn,
+                                                           Bounds.LastRow);
                 }
 
                 Control.Document.EndUndoCapture();
@@ -111,7 +112,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
                 {
                     return Bounds;
                 }
-                else if (Bounds.FirstRow == Bounds.LastRow && Bounds.FirstColumn < Bounds.LastColumn)
+                else if (Bounds.FirstRow == Bounds.LastRow &&
+                         Bounds.FirstColumn < Bounds.LastColumn)
                 {
                     return Bounds;
                 }
@@ -133,8 +135,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
         {
             get
             {
-                return (LogicalBounds.FirstColumn != LogicalBounds.LastColumn ||
-                        LogicalBounds.FirstRow != LogicalBounds.LastRow);
+                return (LogicalBounds.FirstColumn != LogicalBounds.LastColumn
+                        || LogicalBounds.FirstRow != LogicalBounds.LastRow);
             }
         }
 
@@ -145,8 +147,10 @@ namespace Alsing.Windows.Forms.SyntaxBox
         {
             get
             {
-                var p1 = new TextPoint(Bounds.FirstColumn, Bounds.FirstRow);
-                var p2 = new TextPoint(Bounds.LastColumn, Bounds.LastRow);
+                var p1 = new TextPoint(Bounds.FirstColumn,
+                                       Bounds.FirstRow);
+                var p2 = new TextPoint(Bounds.LastColumn,
+                                       Bounds.LastRow);
                 int i1 = Control.Document.PointToIntPos(p1);
                 int i2 = Control.Document.PointToIntPos(p2);
                 return i2 - i1;
@@ -161,7 +165,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
         {
             get
             {
-                var p = new TextPoint(Bounds.LastColumn, Bounds.LastRow);
+                var p = new TextPoint(Bounds.LastColumn, Bounds.LastRow)
+                    ;
                 return Control.Document.PointToIntPos(p);
             }
             set
@@ -180,7 +185,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
         {
             get
             {
-                var p = new TextPoint(Bounds.FirstColumn, Bounds.FirstRow);
+                var p = new TextPoint(Bounds.FirstColumn,
+                                      Bounds.FirstRow);
                 return Control.Document.PointToIntPos(p);
             }
             set
@@ -198,7 +204,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
         {
             get
             {
-                var p = new TextPoint(LogicalBounds.FirstColumn, LogicalBounds.FirstRow);
+                var p = new TextPoint(LogicalBounds.FirstColumn,
+                                      LogicalBounds.FirstRow);
                 return Control.Document.PointToIntPos(p);
             }
             set
@@ -223,7 +230,10 @@ namespace Alsing.Windows.Forms.SyntaxBox
 
             Row xtr = null;
             var ActionGroup = new UndoBlockCollection();
-            for (int i = LogicalBounds.FirstRow; i <= LogicalBounds.LastRow; i++)
+            for (int i = LogicalBounds.FirstRow;
+                 i <=
+                 LogicalBounds.LastRow;
+                 i++)
             {
                 xtr = Control.Document[i];
                 xtr.Text = "\t" + xtr.Text;
@@ -253,7 +263,10 @@ namespace Alsing.Windows.Forms.SyntaxBox
 
             Row xtr = null;
             var ActionGroup = new UndoBlockCollection();
-            for (int i = LogicalBounds.FirstRow; i <= LogicalBounds.LastRow; i++)
+            for (int i = LogicalBounds.FirstRow;
+                 i <=
+                 LogicalBounds.LastRow;
+                 i++)
             {
                 xtr = Control.Document[i];
                 var b = new UndoBlock();
@@ -291,7 +304,10 @@ namespace Alsing.Windows.Forms.SyntaxBox
 
             Row xtr = null;
             var ActionGroup = new UndoBlockCollection();
-            for (int i = LogicalBounds.FirstRow; i <= LogicalBounds.LastRow; i++)
+            for (int i = LogicalBounds.FirstRow;
+                 i <=
+                 LogicalBounds.LastRow;
+                 i++)
             {
                 xtr = Control.Document[i];
                 xtr.Text = Pattern + xtr.Text;
@@ -321,7 +337,10 @@ namespace Alsing.Windows.Forms.SyntaxBox
 
             Row xtr = null;
             var ActionGroup = new UndoBlockCollection();
-            for (int i = LogicalBounds.FirstRow; i <= LogicalBounds.LastRow; i++)
+            for (int i = LogicalBounds.FirstRow;
+                 i <=
+                 LogicalBounds.LastRow;
+                 i++)
             {
                 xtr = Control.Document[i];
                 var b = new UndoBlock();
@@ -391,7 +410,8 @@ namespace Alsing.Windows.Forms.SyntaxBox
         {
             Bounds.FirstColumn = 0;
             Bounds.FirstRow = 0;
-            Bounds.LastColumn = Control.Document[Control.Document.Count - 1].Text.Length;
+            Bounds.LastColumn = Control.Document[Control.Document.Count -
+                                                 1].Text.Length;
             Bounds.LastRow = Control.Document.Count - 1;
             Control.Caret.Position.X = Bounds.LastColumn;
             Control.Caret.Position.Y = Bounds.LastRow;

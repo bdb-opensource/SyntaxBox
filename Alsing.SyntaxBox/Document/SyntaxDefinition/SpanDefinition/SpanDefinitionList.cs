@@ -15,5 +15,7 @@ namespace Alsing.SourceCode
     /// <summary>
     /// 
     /// </summary>
-    public class SpanDefinitionList : List<SpanDefinition> {}
+    public class SpanDefinitionList : List<SpanDefinition>
+    {
+    }
 }

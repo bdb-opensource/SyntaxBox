@@ -80,7 +80,8 @@ namespace Alsing.Windows.Forms
             }
         }
 
-        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(true),
+         EditorBrowsable(EditorBrowsableState.Always)]
         [Category("Appearance - Borders"), Description("The border style")]
         [DefaultValue(BorderStyle.None)]
         public new BorderStyle BorderStyle

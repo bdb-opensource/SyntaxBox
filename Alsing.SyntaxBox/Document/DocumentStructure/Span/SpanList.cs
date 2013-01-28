@@ -15,5 +15,7 @@ namespace Alsing.SourceCode
     /// <summary>
     /// 
     /// </summary>
-    public sealed class SpanList : List<Span> {}
+    public sealed class SpanList : List<Span>
+    {        
+    }
 }

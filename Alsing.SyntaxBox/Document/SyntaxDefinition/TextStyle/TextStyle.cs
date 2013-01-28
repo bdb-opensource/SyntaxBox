@@ -18,8 +18,10 @@ namespace Alsing.SourceCode
     /// <summary>
     /// TextStyles are used to describe the apperance of text.
     /// </summary>
-    [Editor(typeof (TextStyleUIEditor), typeof (UITypeEditor))]
-    public class TextStyle : ICloneable
+    [Editor(typeof (TextStyleUIEditor), typeof
+        (UITypeEditor))]
+    public class TextStyle :
+        ICloneable
     {
         /// <summary>
         /// Name of the style
@@ -31,7 +33,8 @@ namespace Alsing.SourceCode
         private bool _Bold;
 
         [Category("Font")]
-        [Description("Gets or Sets if the style uses a BOLD font")]
+        [Description("Gets or Sets if the style uses a BOLD font")
+        ]
         public bool Bold
         {
             get { return _Bold; }
@@ -49,8 +52,10 @@ namespace Alsing.SourceCode
         private bool _Italic;
 
         [Category("Font")]
-        [Description("Gets or Sets if the style uses an ITALIC font")]
-        public bool Italic
+        [Description(
+            "Gets or Sets if the style uses an ITALIC font")]
+        public bool
+            Italic
         {
             get { return _Italic; }
             set
@@ -67,8 +72,10 @@ namespace Alsing.SourceCode
         private bool _Underline;
 
         [Category("Font")]
-        [Description("Gets or Sets if the style uses an UNDERLINED font")]
-        public bool Underline
+        [Description(
+            "Gets or Sets if the style uses an UNDERLINED font")]
+        public bool
+            Underline
         {
             get { return _Underline; }
             set
@@ -85,7 +92,8 @@ namespace Alsing.SourceCode
         private Color _ForeColor = Color.Black;
 
         [Category("Color")]
-        [Description("Gets or Sets the fore color of the style")]
+        [Description("Gets or Sets the fore color of the style")
+        ]
         public Color ForeColor
         {
             get { return _ForeColor; }
@@ -103,8 +111,10 @@ namespace Alsing.SourceCode
         private Color _BackColor = Color.Transparent;
 
         [Category("Color")]
-        [Description("Gets or Sets the background color of the style")]
-        public Color BackColor
+        [Description(
+            "Gets or Sets the background color of the style")]
+        public Color
+            BackColor
         {
             get { return _BackColor; }
             set
@@ -119,18 +129,23 @@ namespace Alsing.SourceCode
         /// <summary>
         /// Gets or Sets if the style uses a Bold font
         /// </summary>
+
         /// <summary>
         /// Gets or Sets if the style uses an Italic font
         /// </summary>
+
         /// <summary>
         /// Gets or Sets if the style uses an Underlined font
         /// </summary>
+
         /// <summary>
         /// Gets or Sets the ForeColor of the style
         /// </summary>
+
         /// <summary>
         /// Gets or Sets the BackColor of the style
         /// </summary>
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -171,7 +186,7 @@ namespace Alsing.SourceCode
         {
             var ts = new TextStyle
                      {
-//TODO: verify if this actually works
+                         //TODO: verify if this actually works
                          BackColor = BackColor,
                          Bold = Bold,
                          ForeColor = ForeColor,

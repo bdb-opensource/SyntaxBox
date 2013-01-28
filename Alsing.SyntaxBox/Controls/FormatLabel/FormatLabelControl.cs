@@ -10,13 +10,14 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Web;
 using System.Windows.Forms;
 using Alsing.Drawing.GDI;
 using Alsing.Windows.Forms.FormatLabel;
+using System.Collections.Generic;
 
 namespace Alsing.Windows.Forms.CoreLib
 {
@@ -222,7 +223,12 @@ namespace Alsing.Windows.Forms.CoreLib
             // FormatLabelControl
             // 
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {this.Filler, this.vScroll, this.hScroll});
+            this.Controls.AddRange(new System.Windows.Forms.Control[]
+                                   {
+                                       this.Filler,
+                                       this.vScroll,
+                                       this.hScroll
+                                   });
             this.Name = "FormatLabelControl";
             this.Size = new System.Drawing.Size(160, 136);
             this.ResumeLayout(false);
@@ -296,7 +302,7 @@ namespace Alsing.Windows.Forms.CoreLib
                 int y = Margin;
                 for (int i = vScroll.Value; i < _Rows.Count; i++)
                 {
-                    Row r = _Rows[i];
+                    var r = (Row) _Rows[i];
                     x = Margin;
                     r.Visible = true;
                     r.Top = y;
@@ -444,7 +450,10 @@ namespace Alsing.Windows.Forms.CoreLib
 
                     if (cmd.TagName == "img")
                     {
-                        var img = new Element {Tag = cmd.Tag};
+                        var img = new Element
+                                  {
+                                      Tag = cmd.Tag
+                                  };
 
                         elements.Add(img);
                         cmd.Tag = "";
@@ -728,7 +737,7 @@ namespace Alsing.Windows.Forms.CoreLib
         private bool IsIndex(string src)
         {
             int i;
-            return int.TryParse(src, out i);
+            return int.TryParse(src,out i);            
         }
 
         private void CreateWords(Element[] Elements)
@@ -793,7 +802,7 @@ namespace Alsing.Windows.Forms.CoreLib
                     foreach (string word in words)
                     {
                         Element.words[i] = new Word();
-                        string tmp;
+                        string tmp ;
                         Element.words[i].Element = Element;
                         if (i == words.Length - 1)
                         {
@@ -825,7 +834,7 @@ namespace Alsing.Windows.Forms.CoreLib
         private GDIFont GetFont(Font font)
         {
             GDIFont gf = null;
-            if (!_Fonts.TryGetValue(GetFontKey(font), out gf))
+            if (!_Fonts.TryGetValue(GetFontKey(font),out gf))            
             {
                 gf = new GDIFont(font.Name, font.Size, font.Bold, font.Italic, font.Underline, false);
                 _Fonts[GetFontKey(font)] = gf;
@@ -915,19 +924,19 @@ namespace Alsing.Windows.Forms.CoreLib
                     if (index > 0)
                     {
                         int previndex = index - 1;
-                        Row prev = _Rows[previndex];
+                        var prev = (Row) _Rows[previndex];
                         while (previndex >= 0 && prev.Words.Count == 0)
                         {
-                            prev = _Rows[previndex];
+                            prev = (Row) _Rows[previndex];
                             previndex--;
                         }
 
                         if (previndex >= 0)
                         {
-                            prev = _Rows[previndex];
+                            prev = (Row) _Rows[previndex];
                             if (prev.Words.Count > 0)
                             {
-                                Word w = prev.Words[prev.Words.Count - 1];
+                                var w = (Word) prev.Words[prev.Words.Count - 1];
                                 height = w.Height;
                             }
                         }

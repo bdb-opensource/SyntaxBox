@@ -15,5 +15,8 @@ namespace Alsing.SourceCode
     /// <summary>
     /// Row collection class.
     /// </summary>
-    public sealed class RowList : List<Row> {}
+    public sealed class RowList : List<Row>
+    {
+        
+    }
 }

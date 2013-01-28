@@ -33,13 +33,6 @@ namespace Alsing.SourceCode
         AllParsed = 2
     }
 
-    public enum RowRevisionMark
-    {
-        Unchanged,
-        BeforeSave,
-        AfterSave
-    }
-
     /// <summary>
     /// The row class represents a row in a SyntaxDocument
     /// </summary>
@@ -48,8 +41,6 @@ namespace Alsing.SourceCode
         #region General Declarations
 
         private RowState _RowState = RowState.NotParsed;
-
-        private RowRevisionMark _RevisionMark = RowRevisionMark.BeforeSave;
 
         /// <summary>
         /// The owner document
@@ -125,11 +116,10 @@ namespace Alsing.SourceCode
         /// </summary>
         public bool InQueue; //is this line in the parseQueue?
 
-
-
         private bool mBookmarked; //is this line bookmarked?
         private bool mBreakpoint; //Does this line have a breakpoint?
         private string mText = "";
+        internal WordList words = new WordList();
 
         /// <summary>
         /// The first collapsable span on this row.
@@ -176,8 +166,6 @@ namespace Alsing.SourceCode
         /// </code>
         /// </example>
         public object Tag;
-
-        internal WordList words = new WordList();
 
         #region PUBLIC PROPERTY BACKCOLOR
 
@@ -264,12 +252,6 @@ namespace Alsing.SourceCode
             }
         }
 
-        public RowRevisionMark RevisionMark
-        {
-            get { return _RevisionMark; }
-            set { _RevisionMark = value; }
-        }
-
         #endregion
 
         /// <summary>
@@ -331,8 +313,7 @@ namespace Alsing.SourceCode
                 if (mText != value)
                 {
                     ParsePreview = true;
-                    this.Document.Modified = true;
-                    RevisionMark = RowRevisionMark.BeforeSave;
+                    Document.Modified = true;
                 }
 
                 mText = value;
@@ -341,7 +322,7 @@ namespace Alsing.SourceCode
                     if (ParsePreview)
                     {
                         Document.Parser.ParsePreviewLine(Document.IndexOf(this));
-                        this.Document.OnApplyFormatRanges(this);
+                        Document.OnApplyFormatRanges(this);
                     }
 
                     AddToParseQueue();
@@ -416,7 +397,9 @@ namespace Alsing.SourceCode
                 int i = Document.VisibleRows.IndexOf(this);
                 if (i == -1)
                 {
-                    if (startSpan != null && startSpan.StartRow != null && startSpan.StartRow != this)
+                    if (startSpan != null && 
+                        startSpan.StartRow != null && 
+                        startSpan.StartRow != this)
 
                         return startSpan.StartRow.VisibleIndex;
 
@@ -738,24 +721,20 @@ namespace Alsing.SourceCode
         /// Assigns a new text to the row.
         /// </summary>
         /// <param name="text"></param>
-        public void SetText(string Text)
+        public void SetText(string text)
         {
-            this.Document.StartUndoCapture();
-            TextPoint tp = new TextPoint(0, this.Index);
-            TextRange tr = new TextRange();
-            tr.FirstColumn = 0;
-            tr.FirstRow = tp.Y;
-            tr.LastColumn = this.Text.Length;
-            tr.LastRow = tp.Y;
+            Document.StartUndoCapture();
+            var tp = new TextPoint(0, Index);
+            var tr = new TextRange {FirstColumn = 0, FirstRow = tp.Y, LastColumn = Text.Length, LastRow = tp.Y};
 
-            this.Document.StartUndoCapture();
+            Document.StartUndoCapture();
             //delete the current line
-            this.Document.PushUndoBlock(UndoAction.DeleteRange, this.Document.GetRange(tr), tr.FirstColumn, tr.FirstRow, this.RevisionMark);
+            Document.PushUndoBlock(UndoAction.DeleteRange, Document.GetRange(tr), tr.FirstColumn, tr.FirstRow);
             //alter the text
-            this.Document.PushUndoBlock(UndoAction.InsertRange, Text, tp.X, tp.Y, this.RevisionMark);
-            this.Text = Text;
-            this.Document.EndUndoCapture();
-            this.Document.InvokeChange();
+            Document.PushUndoBlock(UndoAction.InsertRange, text, tp.X, tp.Y);
+            Text = text;
+            Document.EndUndoCapture();
+            Document.InvokeChange();
         }
 
         /// <summary>
